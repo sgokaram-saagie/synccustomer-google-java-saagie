@@ -79,7 +79,15 @@ public class Customer {
 
         String key = folder + filename;
 
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(jsonPath))
+        if ( System.getenv("GOOGLE_APPLICATION_CREDENTIALS_STR") == null ){
+            System.out.println("GOOGLE_APPLICATION_CREDENTIALS. Exiting...");
+            System.exit(1);
+        }
+
+        String GOOGLE_APPLICATION_CREDENTIALS_STR = System.getenv("GOOGLE_APPLICATION_CREDENTIALS_STR");
+        InputStream credentialsStream = new ByteArrayInputStream(GOOGLE_APPLICATION_CREDENTIALS_STR.getBytes());
+
+        GoogleCredentials credentials = GoogleCredentials.fromStream(credentialsStream)
                 .createScoped(Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
 
