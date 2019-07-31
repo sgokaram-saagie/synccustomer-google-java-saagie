@@ -72,8 +72,10 @@ public class Customer {
 
         Class clazz = Customer.class;
         ClassLoader classLoader = clazz.getClassLoader();
-        File inputFile = new File(classLoader.getResource("customers.json").getFile());
-        InputStream inputStream = new FileInputStream(inputFile);
+        //File inputFile = new File(classLoader.getResource("customers.json").getFile());
+        //InputStream inputStream = new FileInputStream(inputFile);
+        InputStream inputStream = clazz.getResourceAsStream("/customers.json");
+
         byte[] buffer = new byte[inputStream.available()];
         inputStream.read(buffer);
 
